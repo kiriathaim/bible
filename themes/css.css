@@ -142,8 +142,7 @@ blockquote p
 .inner
 {
 	margin:0 auto;
-	max-width:975px;
-	padding:3em;
+
 }
 
 .inner h1
@@ -164,7 +163,7 @@ blockquote p
 
 .inner section
 {
-	margin:100px auto;
+	margin:10px auto;
 }
 
 ul
