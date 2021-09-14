@@ -2,6 +2,7 @@
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
 @font-face { font-family: Lora; src: url('fonts/Lora-Regular.ttf'); }
+
 html
 {
 	font-size:100%;
@@ -69,7 +70,7 @@ h1
 
 .me-img
 {
-	background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/36334/profile/profile-512_4.jpg) no-repeat center center ;
+	background:url(/images/jesus-child.png) no-repeat center center;
 	background-size:100%;
   background-position:0px;
 	border-radius:100%;
@@ -111,8 +112,6 @@ h1
 .inner
 {
 	margin:0 auto;
-	max-width:975px;
-	padding:3em;
 }
 
 .inner h1
@@ -133,7 +132,7 @@ h1
 
 .inner section
 {
-	margin:100px auto;
+	margin:10px auto;
 }
 
 ul
