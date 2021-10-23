@@ -2,6 +2,7 @@
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
  }
 @font-face { font-family: Lora; src: url('../fonts/Roboto-Regular.ttf'); }
+@font-face { font-family: RobotoBold; src: url('../fonts/Roboto-Bold.ttf'); }
 
 html
 {
@@ -60,8 +61,7 @@ blockquote p
 
 blockquote b
 {
-	font-style: bold;
-	font-size: 25px;
+  font-family:RobotoBold;
 }
 
 .wrapper
@@ -76,7 +76,7 @@ blockquote b
 	margin-left:-1px;
 	min-width:256px;
 	position:fixed;
-	width:23.33%;
+	width:12%;
 }
 
 .right
@@ -84,7 +84,7 @@ blockquote b
 	float:right;
 	height:100%;
 	position:relative;
-	width:76.66%;
+	width:87%;
 }
 
 
@@ -95,8 +95,9 @@ blockquote b
 	height:290px;
 	left:0;
 	margin:auto;
+	margin-right:25;
 	position:absolute;
-	right:0;
+	right:50;
 	top:0;
 	width:85%;
 }
