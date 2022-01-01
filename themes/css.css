@@ -64,6 +64,10 @@ blockquote b
   font-family:RobotoBold;
 }
 
+ins {
+    text-decoration: underline;
+}
+
 .wrapper
 {
 	height:100%;
