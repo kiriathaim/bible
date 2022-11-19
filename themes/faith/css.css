@@ -29,34 +29,80 @@ h1
 	color:rgba(0,0,0,.75);
 }
 
-blockquote
-{
-	margin: 0;
-	color: #231E28;
-	padding: 30px 30px 10px 40px;
-	border-left: 8px solid #CBDDE7;
-	position: relative;
-	background: #FAF8EB;
-	font-family:Lora, sans-serif;
-	font-weight: 300;
+
+details {
+  background: #eee;
+  margin-bottom: 2rem;
+  padding: .5rem 1rem;
 }
 
-blockquote:before
-{
-	content: "\201C";
-	font-family:Lora;
-	color: #CBDDE7;
-	font-size: 40px;
-	position: absolute;
-	left: 15px;
-	top: 5px;
+summary {
+  cursor: pointer;
 }
 
-blockquote p
-{
-	font-style: italic;
-	font-size: 20px;
-	margin-top: 0;
+summary > * {
+  display: inline;
+}
+
+
+blockquote{
+  display:block;
+  background: #fff;
+  padding: 15px 20px 15px 45px;
+  margin: 0 0 20px;
+  position: relative;
+
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #666;
+  text-align: justify;
+
+  /*Borders - (Optional)*/
+  border-left: 15px solid #c76c0c;
+  border-right: 2px solid #c76c0c;
+
+  /*Box Shadow - (Optional)*/
+  -moz-box-shadow: 2px 2px 15px #ccc;
+  -webkit-box-shadow: 2px 2px 15px #ccc;
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #999;
+
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:5px;
+}
+
+blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+
+blockquote a:hover{
+ color: #666;
+}
+
+blockquote em{
+  font-style: italic;
 }
 
 .wrapper
@@ -66,8 +112,6 @@ blockquote p
 
 .left
 {
-	background-color:rgba(0,0,0,.025);
-	border-right:1px solid rgba(0,0,0,.05);
 	float:right;
 	height:100%;
 	margin-left:-1px;
@@ -100,7 +144,7 @@ blockquote p
 
 .me-img
 {
-	background:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/36334/profile/profile-512_4.jpg) no-repeat center center ;
+	background:url(images/jesus-child.png) no-repeat center center;
 	background-size:100%;
   background-position:0px;
 	border-radius:100%;
@@ -168,22 +212,18 @@ blockquote p
 
 ul
 {
-	list-style-type:none;
 	margin-top:-10px;
-	max-width:570px;
 	padding:0;
 }
 
 .skill-set li
 {
-	background:rgba(0,0,0,.75);
+	background:rgba(0,0,0,.50);
 	border-radius:5px;
 	color:#FFF;
-	display:inline-block;
-	list-style:none;
+
 	margin:15px 15px 0 0;
 	padding:10px;
-	text-align:justify;
 }
 
 @media screen and (max-width: 48em) {
