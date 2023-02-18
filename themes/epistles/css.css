@@ -46,18 +46,25 @@ summary > * {
 
 
 blockquote{
-  display:block;
+  /*display:block;*/
   background: #fff;
   padding: 15px 20px 15px 45px;
   margin: 0 0 20px;
   position: relative;
+  /*margin-left: 10%;*/
+  max-width: 600px;
+  display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
 
   /*Font*/
   font-family: Georgia, serif;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.2;
   color: #666;
-  text-align: justify;
+  text-align: left;
 
   /*Borders - (Optional)*/
   border-left: 15px solid #c76c0c;
@@ -110,14 +117,12 @@ blockquote em{
 	height:100%;
 }
 
-.left
+.centr
 {
-	float:right;
 	height:100%;
-	margin-left:-1px;
-	min-width:256px;
-	position:fixed;
-	width:23.33%;
+	position:relative;
+	margin-left: 1%;
+	width:98%;
 }
 
 .right
@@ -125,7 +130,7 @@ blockquote em{
 	float:right;
 	height:100%;
 	position:relative;
-	width:76.66%;
+	width:80.66%;
 }
 
 
