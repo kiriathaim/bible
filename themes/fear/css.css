@@ -51,9 +51,16 @@ summary > * {
 
 /* надстрочный и подстрочный текст */
 /* поддержка только в Firefox ! */
+/*
 ruby {
   ruby-position: alternate;
 }
+*/
+
+ruby {
+  ruby-position: over;
+}
+
 
 
 blockquote{
