@@ -49,6 +49,12 @@ summary > * {
   display: inline;
 }
 
+/* надстрочный и подстрочный текст */
+/* поддержка только в Firefox ! */
+ruby {
+  ruby-position: alternate;
+}
+
 
 blockquote{
   /*display:block;*/
