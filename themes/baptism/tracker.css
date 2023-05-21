@@ -1,0 +1,177 @@
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+@font-face { font-family: Lora; src: url('./fonts/Roboto-Regular.ttf'); }
+
+html
+{
+  font-size:100%;
+}
+
+body
+{
+  -webkit-font-smoothing:antialiased;
+  color:#333332;
+  font-family:Lora;
+  font-size:18px;
+  font-weight:400;
+  line-height:1.4;
+  text-rendering:optimizeLegibility;
+}
+
+b
+{
+  font-family: Roboto; src: url('./fonts/Roboto-Bold.ttf')
+}
+
+
+
+h1
+{
+  color:rgba(0,0,0,.75);
+}
+
+.wrapper
+{
+  height:100%;
+}
+
+.centr
+{
+  height:100%;
+  position:relative;
+  margin-left: 1%;
+  width:98%;
+}
+
+
+
+.inner
+{
+  margin:0 auto;
+
+}
+
+.inner h1
+{
+  font-size:1.75em;
+}
+
+.inner p
+{
+  color:rgba(0,0,0,.5);
+}
+
+
+.inner section
+{
+  margin:10px auto;
+}
+
+
+  .handmade {
+  text-align:center !important;
+  margin-top:0px !important;
+}
+
+@media screen and (max-width: 75em) {
+    body
+{ font-size:16px;}
+}
+
+@media screen and (max-width: 60em) {
+    body
+{ font-size:14px;}
+}
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+.handmade {
+  text-align:right;
+  margin-top:100px;
+}
+
+
+.tree{
+  --spacing : 1.5rem;
+  --radius  : 10px;
+}
+
+.tree li{
+  display      : block;
+  position     : relative;
+  padding-left : calc(2 * var(--spacing) - var(--radius) - 2px);
+}
+
+.tree ul{
+  margin-left  : calc(var(--radius) - var(--spacing));
+  padding-left : 0;
+}
+
+.tree ul li{
+  border-left : 2px solid #ddd;
+}
+
+.tree ul li:last-child{
+  border-color : transparent;
+}
+
+.tree ul li::before{
+  content      : '';
+  display      : block;
+  position     : absolute;
+  top          : calc(var(--spacing) / -2);
+  left         : -2px;
+  width        : calc(var(--spacing) + 2px);
+  height       : calc(var(--spacing) + 1px);
+  border       : solid #ddd;
+  border-width : 0 0 2px 2px;
+}
+
+.tree summary{
+  display : block;
+  cursor  : pointer;
+}
+
+.tree summary::marker,
+.tree summary::-webkit-details-marker{
+  display : none;
+}
+
+.tree summary:focus{
+  outline : none;
+}
+
+.tree summary:focus-visible{
+  outline : 1px dotted #000;
+}
+
+.tree li::after,
+.tree summary::before{
+  content       : '';
+  display       : block;
+  position      : absolute;
+  top           : calc(var(--spacing) / 2 - var(--radius));
+  left          : calc(var(--spacing) - var(--radius) - 1px);
+  width         : calc(2 * var(--radius));
+  height        : calc(2 * var(--radius));
+  border-radius : 50%;
+  background    : #ddd;
+}
+
+.tree summary::before{
+  content     : '+';
+  z-index     : 1;
+  background  : #696;
+  color       : #fff;
+  line-height : calc(2 * var(--radius) - 2px);
+  text-align  : center;
+}
+
+.tree details[open] > summary::before{
+  content : '−';
+}
