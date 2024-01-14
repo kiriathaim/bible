@@ -15,9 +15,7 @@ body
 	-webkit-font-smoothing:antialiased;
 	
 	font-family:IBMPlexSans;
-	font-size:19px;
-	font-weight:400;
-	line-height:1.4;
+
 	text-rendering:optimizeLegibility;
 }
 
