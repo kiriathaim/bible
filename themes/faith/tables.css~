@@ -69,7 +69,6 @@ striping:
     border-bottom-width: 0;
 }
 
-/*  размер шрифта для столбца с ивритом */
 tbody tr :nth-child(4) {
   font-size: 30px;
 }
