@@ -1,0 +1,38 @@
+@font-face { font-family: Lora; src: url('../fonts/Roboto-Regular.ttf'); }
+
+@font-face { font-family: Ezra; src: url('./font/SILEOT.ttf'); }
+@font-face { font-family: Yhudit; src: url('./font/YhuditFonetika-Regular.ttf'); }
+
+.pure-table {
+    /* Remove spacing between table cells (from Normalize.css) */
+    /* border-collapse: collapse;*/
+    border-spacing: 0;
+    empty-cells: show;
+}
+
+.pure-table td {
+    /*border-left: 1px solid #cbcbcb;  /*inner column border */
+    /*border-width: 0 0 0 1px;*/
+    /*font-size: inherit;*/
+    /*margin: 0;*/
+    padding: 0.2em 0.5em; /* cell padding */
+}
+
+
+td[scope="ez"] {
+  font-size: 40px;
+  font-family: Ezra;
+}
+
+td[scope="yh"] {
+  font-size: 40px;
+  font-family: Yhudit;
+  color: #C70039;
+}
+
+td[scope="rus"] {
+  font-size: 25px;
+  font-family: Lora;
+  color:  #2980b9;
+  text-align: center;
+}
