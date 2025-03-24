@@ -43,110 +43,10 @@ details {
   padding: .5rem 1rem;
 }
 
-summary {
-  cursor: pointer;
-}
-
-summary > * {
-  display: inline;
-}
-
-
-blockquote{
-  display:block;
-  background: #fff;
-  padding: 15px 20px 15px 45px;
-  margin: 0 0 20px;
-  position: relative;
-
-  /*Font*/
-  font-family: Georgia, serif;
-  font-size: 16px;
-  line-height: 1.2;
-  color: #666;
-  text-align: justify;
-
-  /*Borders - (Optional)*/
-  border-left: 15px solid #c76c0c;
-  border-right: 2px solid #c76c0c;
-
-  /*Box Shadow - (Optional)*/
-  -moz-box-shadow: 2px 2px 15px #ccc;
-  -webkit-box-shadow: 2px 2px 15px #ccc;
-  box-shadow: 2px 2px 15px #ccc;
-}
-
-blockquote::before{
-  content: "\201C"; /*Unicode for Left Double Quote*/
-
-  /*Font*/
-  font-family: Georgia, serif;
-  font-size: 60px;
-  font-weight: bold;
-  color: #999;
-
-  /*Positioning*/
-  position: absolute;
-  left: 10px;
-  top:5px;
-}
-
-blockquote::after{
-  /*Reset to make sure*/
-  content: "";
-}
-
-blockquote a{
-  text-decoration: none;
-  background: #eee;
-  cursor: pointer;
-  padding: 0 3px;
-  color: #c76c0c;
-}
-
-blockquote a:hover{
- color: #666;
-}
-
-blockquote em{
-  font-style: italic;
-}
 
 .wrapper
 {
 	height:100%;
-}
-
-.left
-{
-	float:right;
-	height:100%;
-	margin-left:-1px;
-	min-width:256px;
-	position:fixed;
-	width:23.33%;
-}
-
-.right
-{
-	float:right;
-	height:100%;
-	position:relative;
-	width:76.66%;
-}
-
-
-.name-hero
-{
-	background:rgba(0,0,0,.001);
-	bottom:0;
-	height:290px;
-	left:0;
-	margin:auto;
-	position:absolute;
-	right:0;
-	top:0;
-	width:85%;
 }
 
 .me-img
@@ -161,39 +61,9 @@ blockquote em{
 	width:150px;
 }
 
-.name-hero h1
-{
-	font-family:Open Sans, sans-serif;
-	font-size:1.5em;
-	text-align:center;
-}
-
-.name-hero h1 em
-{
-	color:rgba(0,0,0,.3);
-	font-style:normal;
-	font-weight:700;
-}
-
-.name-hero p
-{
-	color:rgba(0,0,0,.5);
-	font-size:.75em;
-	line-height:1.5;
-	margin:0 8px 0 0;
-	text-align:center;
-}
-
-.name-hero .name-text
-{
-	margin:0 auto;
-	width:85%;
-}
-
 .inner
 {
 	margin:0 auto;
-
 }
 
 .inner h1
@@ -217,22 +87,6 @@ blockquote em{
 	margin:10px auto;
 }
 
-ul
-{
-	margin-top:-10px;
-	padding:0;
-}
-
-.skill-set li
-{
-	background:rgba(0,0,0,.50);
-	border-radius:5px;
-	color:#FFF;
-
-	margin:15px 15px 0 0;
-	padding:10px;
-}
-
 @media screen and (max-width: 48em) {
 	.right,.left
 	{
@@ -251,14 +105,8 @@ ul
 { font-size:16px;}
 }
 
-@media screen and (max-width: 60em) {
+@media screen and (max-width: 60em) 
+{
     body
 { font-size:14px;}
-}
-.clearfix:after {
-   content: " "; /* Older browser do not support empty content */
-   visibility: hidden;
-   display: block;
-   height: 0;
-   clear: both;
 }
