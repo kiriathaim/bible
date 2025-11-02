@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleBody = document.getElementById('article-body');
     
     // Загружаем наш JSON-файл
-    fetch('/themes/faith/trust.json')
+    fetch('themes/faith/trust.json')
         .then(response => response.json()) // Преобразуем ответ сервера в JSON-объект
         .then(data => {
             // Когда данные успешно загружены, вызываем функцию для построения страницы
