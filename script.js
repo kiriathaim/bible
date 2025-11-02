@@ -1,0 +1,123 @@
+// Ждем, пока вся HTML-структура страницы будет загружена
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Находим главные контейнеры в HTML, куда будем вставлять контент
+    const articleHeader = document.getElementById('article-header');
+    const articleBody = document.getElementById('article-body');
+    
+    // Загружаем наш JSON-файл
+    fetch('/themes/faith/trust.json')
+        .then(response => response.json()) // Преобразуем ответ сервера в JSON-объект
+        .then(data => {
+            // Когда данные успешно загружены, вызываем функцию для построения страницы
+            renderArticle(data);
+        })
+        .catch(error => {
+            // Если произошла ошибка (например, файл не найден), выводим ее в консоль
+            console.error('Ошибка при загрузке статьи:', error);
+            articleBody.innerHTML = '<p>Не удалось загрузить контент статьи. Пожалуйста, попробуйте позже.</p>';
+        });
+
+    // Главная функция, которая "рисует" статью на основе данных из JSON
+    function renderArticle(data) {
+
+        // Принимает на вход строку или массив строк и всегда возвращает одну готовую строку HTML.
+        const renderContent = (content) => {
+            if (Array.isArray(content)) {
+                return content.join(' '); // Соединяем массив строк через пробел
+            }
+            return content; // Если это уже строка, просто возвращаем ее
+        };
+        
+        // 1. Устанавливаем заголовок страницы (вкладки браузера)
+        document.title = data.title;
+
+        // 2. Создаем и вставляем главный заголовок статьи (H1)
+        const mainTitle = document.createElement('h1');
+        mainTitle.textContent = data.title;
+        articleHeader.appendChild(mainTitle);
+
+        // 3. Создаем и вставляем заглавную картинку
+        if (data.heroImage) {
+            const figure = document.createElement('figure');
+            figure.className = 'hero-image';
+            
+            const img = document.createElement('img');
+            img.src = data.heroImage.url;
+            img.alt = data.heroImage.alt;
+            
+            const figcaption = document.createElement('figcaption');
+            figcaption.textContent = data.heroImage.caption;
+
+            figure.appendChild(img);
+            figure.appendChild(figcaption);
+            articleBody.appendChild(figure);
+        }
+
+        // 4. Проходим по каждому элементу в массиве "body" и создаем соответствующий HTML-блок
+        data.body.forEach(block => {
+            let element;
+            switch (block.type) {
+                case 'paragraph':
+                    element = document.createElement('p');
+                    element.innerHTML = renderContent(block.content);
+                    break;
+                
+                case 'heading':
+                    element = document.createElement(`h${block.level}`);
+                    element.textContent = block.content;
+                    break;
+
+                case 'definition':
+                    element = document.createElement('dl');
+                    element.innerHTML = `<dt>${block.term}</dt><dd>${renderContent(block.definition)}</dd>`;
+                    break;
+
+                case 'quote':
+                    element = document.createElement('blockquote');
+                    element.innerHTML = `<p>${renderContent(block.text)}</p><footer>${block.author}</footer>`;
+                    break;
+
+                case 'list':
+                    element = document.createElement('ul');
+                    block.items.forEach(item => {
+                        const li = document.createElement('li');
+                        // Применяем renderContent к каждому элементу списка
+                        li.innerHTML = renderContent(item);
+                        element.appendChild(li);
+                    });
+                    break;
+
+                case 'table':
+                    element = document.createElement('table');
+                    const thead = `<thead><tr>${block.headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
+                    const tbody = `<tbody>${block.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody>`;
+                    element.innerHTML = thead + tbody;
+                    break;
+
+                case 'case':
+                    element = document.createElement('div');
+                    element.className = 'case-block';
+                    const caseContent = renderContent(block.content);
+                    element.innerHTML = `<h4 class="case-title">${block.title}</h4><p>${caseContent}</p>`;
+                    break;
+                
+                case 'dialogue':
+                    element = document.createElement('div');
+                    element.className = 'dialogue-block';
+                    block.entries.forEach(entry => {
+                        const entryDiv = document.createElement('div');
+                        entryDiv.className = 'dialogue-entry';
+                        // Применяем renderContent к реплике диалога
+                        const lineContent = renderContent(entry.line);
+                        entryDiv.innerHTML = `<span class="speaker">${entry.speaker}</span><p>${lineContent}</p>`;
+                        element.appendChild(entryDiv);
+                    });
+                    break;
+            }
+            if (element) {
+                articleBody.appendChild(element); // Добавляем созданный элемент на страницу
+            }
+        });
+    }
+});

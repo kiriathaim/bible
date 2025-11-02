@@ -1,0 +1,280 @@
+@font-face {
+    font-family: 'Roboto Local';
+    src: url('fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400; /* Обычное начертание */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto Local';
+    src: url('fonts/Roboto-Medium.ttf') format('truetype');
+    font-weight: 500; /* Среднее начертание (для заголовков) */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto Local';
+    src: url('fonts/Roboto-Bold.ttf') format('truetype');
+    font-weight: 700; /* Жирное начертание (для strong) */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto Slab Local'; /* Отдельное имя для шрифта цитат */
+    src: url('fonts/RobotoSlab-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* --- Переменные для легкой настройки цветов и шрифтов --- */
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #333;
+    --title-color: #5D8AA8;
+    --container-bg: #ffffff;
+    --accent-color: #5D8AA8; /* Цвет для ссылок и акцентов */
+    --border-color: #eeeeee; /* Цвет для границ таблиц и цитат */
+    --quote-bg-color: #f9f9f9; /* Фон для цитаты и определений */
+    --case-bg-color: #f0f4f8;  /* Очень светлый пастельно-синий для кейсов */
+    --dialogue-bg-color: #fdf8e1; /* теплый, пастельно-желтый для диалога */
+
+    --main-font: 'Roboto Local', sans-serif;
+    --quote-font: 'Roboto Slab Local', serif; /* Специальный шрифт для цитат */
+    --base-font-size: 1.1rem;
+    --line-height: 1.7;
+}
+
+/* --- Общие стили --- */
+body {
+    margin: 0;
+    font-family: var(--main-font);
+    font-size: var(--base-font-size);
+    line-height: var(--line-height);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Контейнер для контента --- */
+.content-wrapper {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2rem 3rem;
+    background-color: var(--container-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+/* --- Типографика --- */
+h1, h2, h3 {
+    font-weight: 500;
+    color: var(--title-color);
+}
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+}
+h2 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+h3 {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+p {
+    margin-bottom: 1.5rem;
+}
+
+/* === СТИЛИ ДЛЯ НОВЫХ ЭЛЕМЕНТОВ === */
+
+
+/* 1. ЗАГЛАВНАЯ КАРТИНКА */
+.hero-image {
+    margin: 0 0 2rem 0;
+    padding: 0;
+}
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+}
+.hero-image figcaption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 0.5rem;
+}
+
+/* 2. ОПРЕДЕЛЕНИЕ */
+dl {
+    margin: 2rem 0;
+    background-color: var(--quote-bg-color);
+    border-left: 3px solid var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+dt {
+    font-weight: 700;
+    color: var(--title-color);
+    margin-bottom: 0.5rem;
+}
+dd {
+    margin-left: 0;
+}
+
+/* 3. ЦИТАТА */
+blockquote {
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--border-color);
+    font-style: italic;
+}
+blockquote p {
+    font-family: var(--quote-font);
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+blockquote footer {
+    font-style: normal;
+    font-weight: 500;
+    color: #888;
+}
+
+/* 4. СПИСОК */
+ul {
+    padding-left: 25px;
+    margin-bottom: 1.5rem;
+}
+ul li {
+    padding-left: 10px;
+    margin-bottom: 0.75rem;
+}
+ul li::marker {
+    color: var(--accent-color);
+}
+
+/* 5. ТАБЛИЦА */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 1rem;
+}
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+table th {
+    background-color: var(--quote-bg-color);
+    font-weight: 700;
+    color: var(--title-color);
+}
+table tbody tr:last-child th,
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 6. ВЫДЕЛЕНИЕ КЛЮЧЕВОГО СЛОВА */
+strong, b {
+    font-weight: 700;
+}
+
+/* 7. ССЫЛКА */
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease-in-out;
+}
+a:hover {
+    border-bottom-color: var(--accent-color);
+}
+
+/* 8. БЛОК ДЛЯ ПРИМЕРОВ/КЕЙСОВ */
+.case-block {
+    background-color: var(--case-bg-color);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    border: 1px solid #e0e8ef;
+}
+.case-title {
+    font-size: 1.2rem;
+    font-weight: 700; /* Используем более жирное начертание для заголовка блока */
+    color: var(--title-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 28px; /* Место для иконки */
+    /* Встраиваем SVG-иконку лампочки прямо в CSS */
+    background-image: url('icons/lightbulb-icon.svg');
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+.case-block p {
+    margin-bottom: 0; /* Убираем нижний отступ у последнего параграфа в блоке */
+}
+
+
+/* 9. БЛОК ДЛЯ ДИАЛОГА */
+.dialogue-block {
+    margin: 2rem 0;
+    background-color: var(--dialogue-bg-color);
+    border-left: 3px solid #e8e1b0; /* Более темный оттенок фона для границы */
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+.dialogue-entry {
+    margin-bottom: 1rem;
+}
+/* Убираем отступ у последней реплики */
+.dialogue-entry:last-child {
+    margin-bottom: 0;
+}
+.dialogue-entry .speaker {
+    font-weight: 700;
+    color: var(--title-color);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+.dialogue-entry p {
+    margin: 0;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 768px) {
+    :root {
+        --base-font-size: 1rem;
+    }
+    .content-wrapper {
+        margin: 0;
+        padding: 1.5rem;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.2rem; }
+
+    blockquote, dl, table {
+        margin: 1.5rem 0;
+        padding: 1rem;
+    }
+    table { font-size: 0.9rem; }
+    table th, table td { padding: 8px 10px; }
+
+    .case-block, .dialogue-block {
+        padding: 1rem;
+        margin: 1.5rem 0;
+    }
+}
