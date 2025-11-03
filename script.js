@@ -5,18 +5,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleHeader = document.getElementById('article-header');
     const articleBody = document.getElementById('article-body');
     
-    // Загружаем наш JSON-файл
-    fetch('./trust.json')
-        .then(response => response.json()) // Преобразуем ответ сервера в JSON-объект
-        .then(data => {
-            // Когда данные успешно загружены, вызываем функцию для построения страницы
-            renderArticle(data);
-        })
-        .catch(error => {
-            // Если произошла ошибка (например, файл не найден), выводим ее в консоль
-            console.error('Ошибка при загрузке статьи:', error);
-            articleBody.innerHTML = '<p>Не удалось загрузить контент статьи. Пожалуйста, попробуйте позже.</p>';
-        });
+    // 1. Получаем параметры из URL-адреса
+    const params = new URLSearchParams(window.location.search);
+    
+    // 2. Ищем параметр с именем 'article'. Это имя мы используем в ссылках (href="...html?article=...")
+    const articleName = params.get('article');
+    
+    console.log('Скрипт пытается загрузить статью с именем:', articleName); 
+
+    // 3. Если в URL есть имя статьи, формируем путь и загружаем ее
+    if (articleName) {
+        // Формируем путь к JSON-файлу. Он лежит в той же папке, что и HTML-шаблон.
+        const pathToArticle = `${articleName}.json`;
+
+        fetch(pathToArticle)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}, не удалось найти файл ${pathToArticle}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                renderArticle(data);
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке статьи:', error);
+                articleBody.innerHTML = `<p style="color: red;">Не удалось загрузить статью. Убедитесь, что файл <b>${pathToArticle}</b> существует.</p>`;
+            });
+    } else {
+        // 4. Если в URL не указана статья, выводим сообщение
+        articleHeader.innerHTML = '<h1>Ошибка</h1>';
+        articleBody.innerHTML = '<p>Не выбрана статья для отображения. Пожалуйста, перейдите по ссылке со списком статей.</p>';
+    }
+        
+    // Вспомогательная функция для рендеринга текста
+    const renderContent = (content) => {
+	if (Array.isArray(content)) {
+	    return content.join(' ');
+	}
+	return content;
+    };
 
     // Главная функция, которая "рисует" статью на основе данных из JSON
     function renderArticle(data) {
