@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="ancient_hebrew_alphabet_table.css">
 </head>
 <body>
-
+<div class="container">
     <h1>Таблица еврейского алфавита</h1>
-
+    <div class="table-responsive">
     <table>
         <thead>
             <tr>
@@ -30,54 +30,51 @@
             <!-- Пример строки: Алеф -->
             <tr>
                 <td class="hebrew">א</td>
-                <td></td>
-                <td>АЛЭФ</td>
-                <td>Гортанный взрывной</td>
-                <td>'</td>
-                <td>'</td>
-                <td>ʔ</td>
-                <td>
-                    <button onclick="playAudio('aleph.mp3')">▶</button>
-                </td>
+                <td class="hebrew"></td>
+                <td class="name">АЛЭФ</td>
+                <td class="sound-desc desktop-only">Гортанный взрывной</td>
+                <td class="translit">'</td>
+                <td class="translit">'</td>
+                <td class="ipa">ʔ</td>
+                <td><button class="play-btn" onclick="playAudio('aleph.mp3')">▶</button></td>
             </tr>
             <!-- Пример строки: Бэт -->
             <tr>
                 <td class="hebrew">בּ</td>
-                <td></td>
-                <td>БЭТ</td>
-                <td>Звонкий губно-губной смычный</td>
-                <td>Б</td>
-                <td>b</td>
-                <td>b</td>
-                <td>
-                    <button onclick="playAudio('bet.mp3')">▶</button>
-                </td>
+                <td class="hebrew"></td>
+                <td class="name">БЭТ</td>
+                <td class="sound-desc desktop-only">Звонкий губно-губной смычный</td>
+                <td class="translit highlight-ru">Б</td>
+                <td class="translit">b</td>
+                <td class="ipa">b</td>
+                <td><button class="play-btn" onclick="playAudio('bet.mp3')">▶</button></td>
             </tr>
             <!-- Пример строки: Вэт -->
             <tr>
                 <td class="hebrew">ב</td>
-                <td></td>
-                <td>ВЭТ</td>
-                <td>Звонкий губно-зубной щелевой</td>
-                <td>В</td>
-                <td><u>b</u></td>
-                <td>v</td>
-                <td>
-                    <button onclick="playAudio('vet.mp3')">▶</button>
-                </td>
+                <td class="hebrew"></td>
+                <td class="name">ВЭТ</td>
+                <td class="sound-desc desktop-only">Звонкий губно-зубной щелевой</td>
+                <td class="translit highlight-ru">В</td>
+                <td class="translit"><u>b</u></td>
+                <td class="ipa">v</td>
+                <td><button class="play-btn" onclick="playAudio('vet.mp3')">▶</button></td>
             </tr>
             <!-- Здесь нужно добавить остальные буквы по аналогии -->
             <!-- Для краткости я добавил только примеры, ниже объясню как дополнить -->
         </tbody>
     </table>
+</div>
+        <p class="mobile-hint">← Листайте таблицу вправо, если она не помещается →</p>
+</div>
 
     <!-- Скрытый аудио-плеер -->
     <audio id="player"></audio>
 
     <script>
-        function playAudio(filename) {
+        function playAudio(file) {
             const player = document.getElementById('player');
-            player.src = 'audio/' + filename;
+            player.src = 'audio/' + file;
             player.play();
         }
     </script>

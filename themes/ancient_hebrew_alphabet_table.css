@@ -1,54 +1,134 @@
+@font-face {
+    font-family: 'Ezra SIL';
+    src: url('fonts/SILEOT.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --bg-color: #fdfdfd;
+    --header-bg: #ffe5b4;
+    --border-color: #e0c090;
+    --highlight-bg: #fff9e6;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #fdfdfd;
-    padding: 20px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 10px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #444;
+    font-size: 1.5rem;
+}
+
+/* Адаптивность: Обертка для прокрутки на смартфонах */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Включает горизонтальный свайп */
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    background-color: white;
+    min-width: 600px; /* Чтобы таблица не "схлопывалась" на мелких экранах */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: center;
 }
 
 th {
-    background-color: #ffe5b4; /* Теплый бежевый как на фото */
-    border: 1px solid #e0c090;
-    padding: 10px;
-    font-size: 0.9em;
+    background-color: var(--header-bg);
+    border: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    position: sticky; /* Шапка будет видна при прокрутке вверх-вниз */
+    top: 0;
 }
 
-td {
-    border: 1px solid #eee;
-    padding: 10px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-/* Выделение цветом колонок как на картинке */
-td:nth-child(1), td:nth-child(2), td:nth-child(3) {
-    background-color: #fff9e6;
-}
-
+/* Оформление букв и транскрипции */
 .hebrew {
-    font-size: 24px;
-    font-family: "Times New Roman", serif;
+    font-family: 'Ezra SIL', serif;
+    font-size: 2.4rem; /* Крупная буква */
+    color: #000;
+    width: 60px;
 }
 
-button {
+.name {
+    font-weight: bold;
+    color: #555;
+    background-color: var(--highlight-bg);
+}
+
+.translit {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.highlight-ru {
+    color: #d32f2f; /* Выделение русской транслитерации цветом */
+}
+
+.ipa {
+    font-size: 1.2rem;
+    font-family: 'Charis SIL', 'DejaVu Sans', serif; /* IPA требует хороших шрифтов */
+    color: #00796b;
+    font-weight: bold;
+}
+
+.sound-desc {
+    font-size: 0.85rem;
+    color: #666;
+    text-align: left;
+}
+
+/* Кнопка звука */
+.play-btn {
     background: #ffcc66;
     border: none;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.1s;
 }
 
-button:hover {
-    background: #ffa500;
+.play-btn:active {
+    transform: scale(0.9);
+}
+
+/* Скрытие длинных описаний на мобильных для экономии места */
+@media screen and (max-width: 768px) {
+    .desktop-only {
+        display: none;
+    }
+    .mobile-hint {
+        display: block;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .mobile-hint {
+        display: none;
+    }
 }
