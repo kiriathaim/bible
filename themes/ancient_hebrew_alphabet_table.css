@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fdfdfd;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+
+th {
+    background-color: #ffe5b4; /* Теплый бежевый как на фото */
+    border: 1px solid #e0c090;
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+td {
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Выделение цветом колонок как на картинке */
+td:nth-child(1), td:nth-child(2), td:nth-child(3) {
+    background-color: #fff9e6;
+}
+
+.hebrew {
+    font-size: 24px;
+    font-family: "Times New Roman", serif;
+}
+
+button {
+    background: #ffcc66;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ffa500;
+}
