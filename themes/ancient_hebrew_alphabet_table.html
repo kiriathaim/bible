@@ -36,7 +36,7 @@
                 <td class="translit">'</td>
                 <td class="translit">'</td>
                 <td class="ipa">ʔ</td>
-                <td><button class="play-btn" onclick="playAudio('aleph.mp3')">▶</button></td>
+                <td><button class="play-btn" onclick="toggleAudio('aleph.mp3', this)">▶</button></td>
             </tr>
             <!-- Пример строки: Бэт -->
             <tr>
@@ -47,7 +47,7 @@
                 <td class="translit highlight-ru">Б</td>
                 <td class="translit">b</td>
                 <td class="ipa">b</td>
-                <td><button class="play-btn" onclick="playAudio('bet.mp3')">▶</button></td>
+                <td><button class="play-btn" onclick="toggleAudio('bet.mp3')">▶</button></td>
             </tr>
             <!-- Пример строки: Вэт -->
             <tr>
@@ -58,7 +58,7 @@
                 <td class="translit highlight-ru">В</td>
                 <td class="translit"><u>b</u></td>
                 <td class="ipa">v</td>
-                <td><button class="play-btn" onclick="playAudio('vet.mp3')">▶</button></td>
+                <td><button class="play-btn" onclick="toggleAudio('vet.mp3')">▶</button></td>
             </tr>
             <!-- Здесь нужно добавить остальные буквы по аналогии -->
             <!-- Для краткости я добавил только примеры, ниже объясню как дополнить -->
@@ -72,11 +72,46 @@
     <audio id="player"></audio>
 
     <script>
-        function playAudio(file) {
-            const player = document.getElementById('player');
-            player.src = 'audio/' + file;
-            player.play();
-        }
+        let currentAudio = new Audio();
+        let currentButton = null;
+
+        function toggleAudio(filename, btn) {
+            const audioPath = 'audio/' + filename;
+
+            // Если нажали на ту же кнопку, что уже играет
+            if (currentButton === btn) {
+                if (currentAudio.paused) {
+                    currentAudio.play();
+                    btn.innerHTML = '⏸';
+                    btn.classList.add('playing');
+                } else {
+                    currentAudio.pause();
+                    btn.innerHTML = '▶';
+                    btn.classList.remove('playing');
+                }
+                return;
+            }
+
+            // Если нажали на новую кнопку, а старая еще играет
+            if (currentButton) {
+                currentButton.innerHTML = '▶';
+                currentButton.classList.remove('playing');
+            }
+
+            // Настраиваем новый трек
+            currentAudio.src = audioPath;
+            currentAudio.play();
+            currentButton = btn;
+            btn.innerHTML = '⏸';
+            btn.classList.add('playing');
+
+            // Когда звук закончился — возвращаем иконку Play
+            currentAudio.onended = function() {
+                btn.innerHTML = '▶';
+                btn.classList.remove('playing');
+                currentButton = null;
+            };
+       }
     </script>
 </body>
 </html>

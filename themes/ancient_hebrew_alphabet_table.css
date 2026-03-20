@@ -132,3 +132,29 @@ th {
         display: none;
     }
 }
+
+/* Состояние кнопки при проигрывании */
+.play-btn.playing {
+    background: #ff9800; /* Более яркий оранжевый */
+    box-shadow: 0 0 8px rgba(255, 152, 0, 0.6);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Стили для IPA и Транслитерации, чтобы они были еще заметнее */
+.translit, .ipa {
+    display: inline-block;
+    min-width: 1.5rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* Выделение при наведении на строку таблицы */
+tbody tr:hover {
+    background-color: #fffdec;
+}
