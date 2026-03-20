@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Ezra SIL';
-    src: url('fonts/SILEOT.ttf') format('truetype'); 
+    src: url('fonts/SILEOT.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -10,24 +10,26 @@
     --header-bg: #ffe5b4;
     --border-color: #e0c090;
     --highlight-bg: #fff9e6;
+    --accent-color: #d32f2f;
 }
 
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background-color: var(--bg-color);
     margin: 0;
-    padding: 10px;
+    padding: 20px;
+    line-height: 1.4;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
 h1 {
     text-align: center;
-    color: #444;
-    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 30px;
 }
 
 /* Адаптивность: Обертка для прокрутки на смартфонах */
@@ -35,66 +37,69 @@ h1 {
     width: 100%;
     overflow-x: auto; /* Включает горизонтальный свайп */
     -webkit-overflow-scrolling: touch;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
-    min-width: 600px; /* Чтобы таблица не "схлопывалась" на мелких экранах */
+    min-width: 900px; /* Чтобы колонки не слишком сжимались */
 }
 
 th, td {
     border: 1px solid #ddd;
     padding: 12px 8px;
     text-align: center;
+    vertical-align: middle;
 }
 
 th {
     background-color: var(--header-bg);
     border: 1px solid var(--border-color);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     position: sticky; /* Шапка будет видна при прокрутке вверх-вниз */
     top: 0;
+    color: #5d4037;
 }
 
 /* Оформление букв и транскрипции */
 .hebrew {
     font-family: 'Ezra SIL', serif;
-    font-size: 2.4rem; /* Крупная буква */
+    font-size: 3rem; /* Крупная буква */
     color: #000;
-    width: 60px;
+    width: 80px;
+    background-color: var(--highlight-bg);
 }
 
 .name {
     font-weight: bold;
-    color: #555;
-    background-color: var(--highlight-bg);
+    font-size: 1.1rem;
+}
+
+/* Улучшение читаемости для десктопа */
+.sound-desc {
+    font-size: 1.05rem; /* Увеличено для десктопа */
+    color: #444;
+    text-align: left;
+    max-width: 300px;
 }
 
 .translit {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.highlight-ru {
-    color: #d32f2f; /* Выделение русской транслитерации цветом */
-}
-
-.ipa {
-    font-size: 1.2rem;
-    font-family: 'Charis SIL', 'DejaVu Sans', serif; /* IPA требует хороших шрифтов */
-    color: #00796b;
+    font-size: 1.4rem;
     font-weight: bold;
 }
 
-.sound-desc {
-    font-size: 0.85rem;
-    color: #666;
-    text-align: left;
+.highlight-ru {
+    color: var(--accent-color);
+}
+
+.ipa {
+    font-size: 1.4rem;
+    color: #00796b;
+    font-weight: bold;
 }
 
 /* Кнопка звука */
@@ -102,41 +107,26 @@ th {
     background: #ffcc66;
     border: none;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 45px;
+    height: 45px;
     cursor: pointer;
-    font-size: 14px;
-    transition: transform 0.1s;
+    font-size: 18px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }
 
-.play-btn:active {
-    transform: scale(0.9);
-}
-
-/* Скрытие длинных описаний на мобильных для экономии места */
-@media screen and (max-width: 768px) {
-    .desktop-only {
-        display: none;
-    }
-    .mobile-hint {
-        display: block;
-        text-align: center;
-        font-size: 0.8rem;
-        color: #888;
-        margin-top: 10px;
-    }
-}
-
-@media screen and (min-width: 769px) {
-    .mobile-hint {
-        display: none;
-    }
+.play-btn:hover {
+    background: #ffb74d;
+    transform: scale(1.1);
 }
 
 /* Состояние кнопки при проигрывании */
 .play-btn.playing {
-    background: #ff9800; /* Более яркий оранжевый */
-    box-shadow: 0 0 8px rgba(255, 152, 0, 0.6);
+    background: #ff9800;
+    box-shadow: 0 0 12px rgba(255, 152, 0, 0.5);
     animation: pulse 1.5s infinite;
 }
 
@@ -146,12 +136,34 @@ th {
     100% { transform: scale(1); }
 }
 
-/* Стили для IPA и Транслитерации, чтобы они были еще заметнее */
-.translit, .ipa {
-    display: inline-block;
-    min-width: 1.5rem;
-    padding: 2px 6px;
-    border-radius: 4px;
+/* Мобильная адаптация */
+@media screen and (max-width: 768px) {
+    .desktop-only {
+        display: none; /* Скрываем описание на мобильных */
+    }
+    
+    table {
+        min-width: 600px;
+    }
+    
+    .hebrew {
+        font-size: 2.2rem;
+    }
+
+    .translit, .ipa {
+        font-size: 1.1rem;
+    }
+}
+
+.mobile-hint {
+    display: none;
+    text-align: center;
+    color: #888;
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 600px) {
+    .mobile-hint { display: block; }
 }
 
 /* Выделение при наведении на строку таблицы */

@@ -27,45 +27,326 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Пример строки: Алеф -->
-            <tr>
-                <td class="hebrew">א</td>
-                <td class="hebrew"></td>
-                <td class="name">АЛЭФ</td>
-                <td class="sound-desc desktop-only">Гортанный взрывной</td>
-                <td class="translit">'</td>
-                <td class="translit">'</td>
-                <td class="ipa">ʔ</td>
-                <td><button class="play-btn" onclick="toggleAudio('aleph.mp3', this)">▶</button></td>
-            </tr>
-            <!-- Пример строки: Бэт -->
-            <tr>
-                <td class="hebrew">בּ</td>
-                <td class="hebrew"></td>
-                <td class="name">БЭТ</td>
-                <td class="sound-desc desktop-only">Звонкий губно-губной смычный</td>
-                <td class="translit highlight-ru">Б</td>
-                <td class="translit">b</td>
-                <td class="ipa">b</td>
-                <td><button class="play-btn" onclick="toggleAudio('bet.mp3')">▶</button></td>
-            </tr>
-            <!-- Пример строки: Вэт -->
-            <tr>
-                <td class="hebrew">ב</td>
-                <td class="hebrew"></td>
-                <td class="name">ВЭТ</td>
-                <td class="sound-desc desktop-only">Звонкий губно-зубной щелевой</td>
-                <td class="translit highlight-ru">В</td>
-                <td class="translit"><u>b</u></td>
-                <td class="ipa">v</td>
-                <td><button class="play-btn" onclick="toggleAudio('vet.mp3')">▶</button></td>
-            </tr>
-            <!-- Здесь нужно добавить остальные буквы по аналогии -->
-            <!-- Для краткости я добавил только примеры, ниже объясню как дополнить -->
-        </tbody>
+                <!-- 1. Алеф -->
+                <tr>
+                    <td class="hebrew">א</td>
+                    <td class="hebrew"></td>
+                    <td class="name">АЛЭФ</td>
+                    <td class="sound-desc desktop-only">Гортанный взрывной</td>
+                    <td class="translit highlight-ru">'</td>
+                    <td class="translit">'</td>
+                    <td class="ipa">ʔ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('aleph.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 2. Бэт -->
+                <tr>
+                    <td class="hebrew">בּ</td>
+                    <td class="hebrew"></td>
+                    <td class="name">БЭТ</td>
+                    <td class="sound-desc desktop-only">Звонкий губно-губной смычный</td>
+                    <td class="translit highlight-ru">Б</td>
+                    <td class="translit">b</td>
+                    <td class="ipa">b</td>
+                    <td><button class="play-btn" onclick="toggleAudio('02_bet.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 3. Вэт -->
+                <tr>
+                    <td class="hebrew">ב</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ВЭТ</td>
+                    <td class="sound-desc desktop-only">Звонкий губно-зубной щелевой</td>
+                    <td class="translit highlight-ru">В</td>
+                    <td class="translit"><u>b</u></td>
+                    <td class="ipa">v</td>
+                    <td><button class="play-btn" onclick="toggleAudio('03_vet.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 4. Гимэль (взрывной) -->
+                <tr>
+                    <td class="hebrew">גּ</td>
+                    <td class="hebrew"></td>
+                    <td class="name" rowspan="2">ГИМЭЛЬ</td>
+                    <td class="sound-desc desktop-only">Звонкий велярный смычный</td>
+                    <td class="translit highlight-ru">Г</td>
+                    <td class="translit">g</td>
+                    <td class="ipa">g</td>
+                    <td><button class="play-btn" onclick="toggleAudio('04_gimel_hard.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 5. Гимэль (щелевой) -->
+                <tr>
+                    <td class="hebrew">ג</td>
+                    <td class="hebrew"></td>
+                    <td class="sound-desc desktop-only">Звонкий увулярный щелевой</td>
+                    <td class="translit highlight-ru">Гх</td>
+                    <td class="translit">ḡ</td>
+                    <td class="ipa">ʁ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('05_gimel_soft.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 6. Далет (взрывной) -->
+                <tr>
+                    <td class="hebrew">דּ</td>
+                    <td class="hebrew"></td>
+                    <td class="name" rowspan="2">ДАЛЕТ</td>
+                    <td class="sound-desc desktop-only">Звонкий зазубный смычный</td>
+                    <td class="translit highlight-ru">Д</td>
+                    <td class="translit">d</td>
+                    <td class="ipa">d</td>
+                    <td><button class="play-btn" onclick="toggleAudio('06_dalet_hard.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 7. Далет (щелевой) -->
+                <tr>
+                    <td class="hebrew">ד</td>
+                    <td class="hebrew"></td>
+                    <td class="sound-desc desktop-only">Звонкий зазубный щелевой</td>
+                    <td class="translit highlight-ru">Дз</td>
+                    <td class="translit"><u>d</u></td>
+                    <td class="ipa">ð</td>
+                    <td><button class="play-btn" onclick="toggleAudio('07_dalet_soft.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 8. Хе -->
+                <tr>
+                    <td class="hebrew">ה</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ХЕ</td>
+                    <td class="sound-desc desktop-only">Гортанный щелевой</td>
+                    <td class="translit highlight-ru">х</td>
+                    <td class="translit">h</td>
+                    <td class="ipa">h</td>
+                    <td><button class="play-btn" onclick="toggleAudio('08_he.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 9. Уау -->
+                <tr>
+                    <td class="hebrew">ו</td>
+                    <td class="hebrew"></td>
+                    <td class="name">УАУ</td>
+                    <td class="sound-desc desktop-only">Губно-велярный полугласный</td>
+                    <td class="translit highlight-ru">Уэ</td>
+                    <td class="translit">w</td>
+                    <td class="ipa">w</td>
+                    <td><button class="play-btn" onclick="toggleAudio('09_waw.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 10. Зайин -->
+                <tr>
+                    <td class="hebrew">ז</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ЗАЙИН</td>
+                    <td class="sound-desc desktop-only">Звонкий альвеолярный сибилянт</td>
+                    <td class="translit highlight-ru">З</td>
+                    <td class="translit">z</td>
+                    <td class="ipa">z</td>
+                    <td><button class="play-btn" onclick="toggleAudio('10_zayin.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 11. Ххэт -->
+                <tr>
+                    <td class="hebrew">ח</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ХхЭТ</td>
+                    <td class="sound-desc desktop-only">Глухой глоточный щелевой</td>
+                    <td class="translit highlight-ru">Хх</td>
+                    <td class="translit">ḥ</td>
+                    <td class="ipa">ħ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('11_chet.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 12. Ттэт -->
+                <tr>
+                    <td class="hebrew">ט</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ТтЭТ</td>
+                    <td class="sound-desc desktop-only">Эмфатический глухой альвеолярный взрывной</td>
+                    <td class="translit highlight-ru">Тт</td>
+                    <td class="translit">ṭ</td>
+                    <td class="ipa">tˤ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('12_tet.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 13. Йуд -->
+                <tr>
+                    <td class="hebrew">י</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ЙУД</td>
+                    <td class="sound-desc desktop-only">Палатальный (среднеязычный) неогубленный</td>
+                    <td class="translit highlight-ru">Й</td>
+                    <td class="translit">y</td>
+                    <td class="ipa">j</td>
+                    <td><button class="play-btn" onclick="toggleAudio('13_yod.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 14. Каф -->
+                <tr>
+                    <td class="hebrew">כּ</td>
+                    <td class="hebrew">ךּ</td>
+                    <td class="name">КАФ</td>
+                    <td class="sound-desc desktop-only">Глухой придыхательный велярный смычный</td>
+                    <td class="translit highlight-ru">К</td>
+                    <td class="translit">k</td>
+                    <td class="ipa">kʰ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('14_kaf.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 15. Кхаф -->
+                <tr>
+                    <td class="hebrew">כ</td>
+                    <td class="hebrew">ך</td>
+                    <td class="name">КХАФ</td>
+                    <td class="sound-desc desktop-only">Глухой увулярный щелевой</td>
+                    <td class="translit highlight-ru">Кх</td>
+                    <td class="translit">ḵ</td>
+                    <td class="ipa">χ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('15_khaf.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 16. Ламед -->
+                <tr>
+                    <td class="hebrew">ל</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ЛАМЕД</td>
+                    <td class="sound-desc desktop-only">Звонкий альвеолярный боковой аппроксимант</td>
+                    <td class="translit highlight-ru">Ль</td>
+                    <td class="translit">l</td>
+                    <td class="ipa">l</td>
+                    <td><button class="play-btn" onclick="toggleAudio('16_lamed.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 17. Мэм -->
+                <tr>
+                    <td class="hebrew">מ</td>
+                    <td class="hebrew">ם</td>
+                    <td class="name">МЭМ</td>
+                    <td class="sound-desc desktop-only">Звонкий губно-губной носовой</td>
+                    <td class="translit highlight-ru">М</td>
+                    <td class="translit">m</td>
+                    <td class="ipa">m</td>
+                    <td><button class="play-btn" onclick="toggleAudio('17_mem.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 18. Нун -->
+                <tr>
+                    <td class="hebrew">נ</td>
+                    <td class="hebrew">ן</td>
+                    <td class="name">НУН</td>
+                    <td class="sound-desc desktop-only">Звонкий альвеолярный носовой</td>
+                    <td class="translit highlight-ru">Н</td>
+                    <td class="translit">n</td>
+                    <td class="ipa">n</td>
+                    <td><button class="play-btn" onclick="toggleAudio('18_nun.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 19. Самэх -->
+                <tr>
+                    <td class="hebrew">ס</td>
+                    <td class="hebrew"></td>
+                    <td class="name">САМЭХ</td>
+                    <td class="sound-desc desktop-only">Глухой альвеолярный сибилянт</td>
+                    <td class="translit highlight-ru">С</td>
+                    <td class="translit">s</td>
+                    <td class="ipa">s</td>
+                    <td><button class="play-btn" onclick="toggleAudio('19_samekh.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 20. Айин -->
+                <tr>
+                    <td class="hebrew">ע</td>
+                    <td class="hebrew"></td>
+                    <td class="name">АЙИН</td>
+                    <td class="sound-desc desktop-only">Звонкий глоточный щелевой</td>
+                    <td class="translit highlight-ru">“</td>
+                    <td class="translit">‘</td>
+                    <td class="ipa">ʕ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('20_ayin.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 21. Пэ -->
+                <tr>
+                    <td class="hebrew">פּ</td>
+                    <td class="hebrew">ףּ</td>
+                    <td class="name">ПЭ</td>
+                    <td class="sound-desc desktop-only">Глухой придыхательный губно-губной смычный</td>
+                    <td class="translit highlight-ru">П</td>
+                    <td class="translit">p</td>
+                    <td class="ipa">pʰ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('21_pe.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 22. Пфэ -->
+                <tr>
+                    <td class="hebrew">פ</td>
+                    <td class="hebrew">ף</td>
+                    <td class="name">ПФЭ</td>
+                    <td class="sound-desc desktop-only">Глухой губно-зубной щелевой</td>
+                    <td class="translit highlight-ru">Ф</td>
+                    <td class="translit">p̄</td>
+                    <td class="ipa">f</td>
+                    <td><button class="play-btn" onclick="toggleAudio('22_pfe.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 23. Цади -->
+                <tr>
+                    <td class="hebrew">צ</td>
+                    <td class="hebrew">ץ</td>
+                    <td class="name">ЦАДИ</td>
+                    <td class="sound-desc desktop-only">Глухой эмфатический альвеолярный сибилянт</td>
+                    <td class="translit highlight-ru">Ц</td>
+                    <td class="translit">ṣ</td>
+                    <td class="ipa">sˤ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('23_tsadi.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 24. Кьоф -->
+                <tr>
+                    <td class="hebrew">ק</td>
+                    <td class="hebrew"></td>
+                    <td class="name">КЬОФ</td>
+                    <td class="sound-desc desktop-only">Глухой продвинутый увулярный невзрывной</td>
+                    <td class="translit highlight-ru">Кь</td>
+                    <td class="translit">q</td>
+                    <td class="ipa">q</td>
+                    <td><button class="play-btn" onclick="toggleAudio('24_qof.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 25. Рэш -->
+                <tr>
+                    <td class="hebrew">ר</td>
+                    <td class="hebrew"></td>
+                    <td class="name">РЭШ</td>
+                    <td class="sound-desc desktop-only">Звонкий продвинутый увулярный дрожащий</td>
+                    <td class="translit highlight-ru">Р</td>
+                    <td class="translit">r</td>
+                    <td class="ipa">ʀ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('25_resh.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 26. Син -->
+                <tr>
+                    <td class="hebrew">שׂ</td>
+                    <td class="hebrew"></td>
+                    <td class="name">СИН</td>
+                    <td class="sound-desc desktop-only">Глухой альвеолярный сибилянт</td>
+                    <td class="translit highlight-ru">Сь</td>
+                    <td class="translit">ś</td>
+                    <td class="ipa">s</td>
+                    <td><button class="play-btn" onclick="toggleAudio('26_sin.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 27. Шин -->
+                <tr>
+                    <td class="hebrew">שׁ</td>
+                    <td class="hebrew"></td>
+                    <td class="name">ШИН</td>
+                    <td class="sound-desc desktop-only">Глухой нёбно-альвеолярный щелевой</td>
+                    <td class="translit highlight-ru">Шь</td>
+                    <td class="translit">š</td>
+                    <td class="ipa">ʃ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('27_shin.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 28. Тау -->
+                <tr>
+                    <td class="hebrew">תּ</td>
+                    <td class="hebrew"></td>
+                    <td class="name" rowspan="2">ТАУ</td>
+                    <td class="sound-desc desktop-only">Глухой придыхательный альвеолярный смычный</td>
+                    <td class="translit highlight-ru">Т</td>
+                    <td class="translit">t</td>
+                    <td class="ipa">tʰ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('28_tau_hard.mp3', this)">▶</button></td>
+                </tr>
+                <!-- 29. Тау (щелевой) -->
+                <tr>
+                    <td class="hebrew">ת</td>
+                    <td class="hebrew"></td>
+                    <td class="sound-desc desktop-only">Глухой альвеолярный щелевой</td>
+                    <td class="translit highlight-ru">Тф</td>
+                    <td class="translit">ṯ</td>
+                    <td class="ipa">θ</td>
+                    <td><button class="play-btn" onclick="toggleAudio('29_tau_soft.mp3', this)">▶</button></td>
+                </tr>
+            </tbody>
     </table>
 </div>
-        <p class="mobile-hint">← Листайте таблицу вправо, если она не помещается →</p>
+        <p class="mobile-hint">← Листайте таблицу вправо →</p>
 </div>
 
     <!-- Скрытый аудио-плеер -->
