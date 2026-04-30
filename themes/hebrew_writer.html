@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Генератор PDF с кастомным шрифтом</title>
+    <title>Qatan Yehudit</title>
     
-    <!-- Подключаем библиотеку для создания PDF из HTML -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Подключаем ядро виртуальной клавиатуры Keyman -->
+    <script src="https://s.keyman.com/kmw/engine/18.0/keymanweb.js"></script>
+    <!-- Подключаем интерфейс (кнопка переключения языков/вызова клавиатуры) -->
+    <script src="https://s.keyman.com/kmw/engine/18.0/kmwuibutton.js"></script>
     
     <style>
         /* ПОДКЛЮЧАЕМ ШРИФТ */
         @font-face {
-            font-family: 'MyCustomFont';
+            font-family: 'Ezra SIL';
             src: url('fonts/SILEOT.ttf') format('truetype');
                  /* url('fonts/MyFont.woff2') format('woff2')*/
             font-weight: normal;
@@ -25,13 +27,19 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            margin: 0;
         }
 
         .controls {
             margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        button {
+        button.save-btn {
             padding: 10px 20px;
             font-size: 16px;
             background-color: #28a745;
@@ -42,53 +50,107 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        button:hover {
+        button.save-btn:hover {
             background-color: #218838;
         }
 
-        /* НАСТРАИВАЕМ ОБЛАСТЬ ДЛЯ ВВОДА ТЕКСТА */
-        #document-container {
-            width: 210mm; /* Ширина формата А4 */
-            min-height: 297mm; /* Высота формата А4 */
-            padding: 20mm;
+        /* ПОЛЕ ДЛЯ ВВОДА ТЕКСТА */
+        textarea {
+            width: 100%;
+            max-width: 210mm; /* Ограничиваем шириной листа А4 */
+            height: 60vh; /* Занимает 60% высоты экрана */
+            padding: 20px;
+            box-sizing: border-box;
             background: white;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            /* ПРИМЕНЯЕМ ШРИФТ К ЭТОМУ БЛОКУ */
-            font-family: 'MyCustomFont', sans-serif;
-            font-size: 18px;
-            line-height: 1.5;
-            outline: none; /* Убираем рамку при клике */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            
+            /* Применяем шрифт и УВЕЛИЧИВАЕМ РАЗМЕР для огласовок */
+            font-family: 'Ezra SIL', sans-serif;
+            font-size: 42px; /* Очень крупный размер для комфорта */
+            line-height: 1.6;
+            
+            /* Настройки для иврита */
+            direction: rtl; /* Направление текста справа налево */
+            text-align: right;
+            resize: vertical;
         }
+
+        /* Скрытый блок. Нужен только для идеального экспорта в PDF */
+        #print-container {
+            display: none;
+            width: 100%;
+            font-family: 'Ezra SIL', sans-serif;
+            font-size: 42px;
+            line-height: 1.6;
+            direction: rtl;
+            text-align: right;
+            white-space: pre-wrap; /* Учитывает переносы строк (Enter) */
+            word-wrap: break-word;
+        }
+
+        /* Сохранение в PDF) */
+        @media print {
+            /* Прячем всё лишнее (кнопки, поле ввода, клавиатуру Keyman) */
+            body > *:not(#print-container) {
+                display: none !important;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            /* Показываем только чистый подготовленный текст */
+            #print-container {
+                display: block !important;
+            }
+
+            /* Задаем стандартные поля для PDF-страницы */
+            @page {
+                margin: 20mm;
+            }
+        }
+
     </style>
 </head>
 <body>
 
     <div class="controls">
-        <button onclick="downloadPDF()">Сохранить в PDF</button>
+        <button class="save-btn" onclick="saveToPDF()">Сохранить в PDF</button>
+        <!-- Кнопка клавиатуры Keyman появится здесь автоматически -->
     </div>
 
-    <!-- Атрибут contenteditable="true" превращает обычный div в текстовый редактор -->
-    <div id="document-container" contenteditable="true">
-        Удалите этот текст и начните печатать свой...
-    </div>
+    <!-- Поле ввода, к которому автоматически привяжется Keyman -->
+    <textarea id="editor" placeholder="הקלד כאן... (Начните печатать здесь)"></textarea>
+
+    <!-- Невидимый контейнер для печати (браузер отрендерит его в PDF) -->
+    <div id="print-container"></div>
 
     <script>
-        function downloadPDF() {
-            // Находим блок с текстом
-            const element = document.getElementById('document-container');
-            
-            // Настройки генерации PDF
-            const options = {
-                margin:       0, // Отступы заданы внутри самого div'а
-                filename:     'my-custom-text.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                // scale: 2 или 3 улучшает качество шрифтов в итоговом PDF
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+        // Инициализация KeymanWeb
+        window.addEventListener('load', function () {
+            // Запускаем движок (он сам найдет textarea на странице)
+            keyman.init({
+                attachType: 'auto'
+            });
+            // Загружаем нужную клавиатуру из официального облака
+            keyman.addKeyboards('sil_hebrew');
+        });
 
-            // Запускаем процесс генерации
-            html2pdf().set(options).from(element).save();
+        // Функция подготовки текста и вызова окна сохранения PDF
+        function saveToPDF() {
+            const editor = document.getElementById('editor');
+            const printContainer = document.getElementById('print-container');
+            
+            // Копируем текст из редактора в специальный контейнер для печати
+            printContainer.innerText = editor.value;
+            
+            // Вызываем нативное системное окно браузера.
+            // Принтер должен справится с наложением огласовок (никуд).
+            // Пользователю останется в открывшемся окне выбрать "Сохранить как PDF".
+            window.print();
         }
     </script>
 </body>
