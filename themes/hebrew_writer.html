@@ -6,9 +6,9 @@
     <title>Qatan Yehudit</title>
     
     <!-- Подключаем ядро виртуальной клавиатуры Keyman -->
-    <script src="https://s.keyman.com/kmw/engine/18.0/keymanweb.js"></script>
+    <script src="https://s.keyman.com/kmw/engine/17.0.330/keymanweb.js"></script>
     <!-- Подключаем интерфейс (кнопка переключения языков/вызова клавиатуры) -->
-    <script src="https://s.keyman.com/kmw/engine/18.0/kmwuibutton.js"></script>
+    <script src="https://s.keyman.com/kmw/engine/17.0.330/kmwuitoggle.js"></script>
     
     <style>
         /* ПОДКЛЮЧАЕМ ШРИФТ */
@@ -129,29 +129,31 @@
     <div id="print-container"></div>
 
     <script>
-        // Инициализация KeymanWeb
-        window.addEventListener('load', function () {
-            // Запускаем движок (он сам найдет textarea на странице)
+    // Инициализация KeymanWeb после полной загрузки страницы
+    window.addEventListener('load', function () {
+        if (typeof keyman !== 'undefined') {
+            // Запускаем движок (он сам найдет textarea)
             keyman.init({
                 attachType: 'auto'
             });
-            // Загружаем нужную клавиатуру из официального облака
+            // Загружаем официальную клавиатуру иврита SIL с огласовками
             keyman.addKeyboards('sil_hebrew');
-        });
-
-        // Функция подготовки текста и вызова окна сохранения PDF
-        function saveToPDF() {
-            const editor = document.getElementById('editor');
-            const printContainer = document.getElementById('print-container');
-            
-            // Копируем текст из редактора в специальный контейнер для печати
-            printContainer.innerText = editor.value;
-            
-            // Вызываем нативное системное окно браузера.
-            // Принтер должен справится с наложением огласовок (никуд).
-            // Пользователю останется в открывшемся окне выбрать "Сохранить как PDF".
-            window.print();
+        } else {
+            console.error("KeymanWeb не загрузился. Проверьте подключение к интернету.");
         }
-    </script>
+    });
+
+    // Функция подготовки текста и вызова окна сохранения PDF
+    function saveToPDF() {
+        const editor = document.getElementById('editor');
+        const printContainer = document.getElementById('print-container');
+        
+        // Копируем текст
+        printContainer.innerText = editor.value;
+        
+        // Вызываем окно печати
+        window.print();
+    }
+</script>
 </body>
 </html>
