@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор PDF с кастомным шрифтом</title>
+    
+    <!-- Подключаем библиотеку для создания PDF из HTML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* ПОДКЛЮЧАЕМ ШРИФТ */
+        @font-face {
+            font-family: 'MyCustomFont';
+            src: url('fonts/SILEOT.ttf') format('truetype');
+                 /* url('fonts/MyFont.woff2') format('woff2')*/
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            font-family: Ezra SIL, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* НАСТРАИВАЕМ ОБЛАСТЬ ДЛЯ ВВОДА ТЕКСТА */
+        #document-container {
+            width: 210mm; /* Ширина формата А4 */
+            min-height: 297mm; /* Высота формата А4 */
+            padding: 20mm;
+            background: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            /* ПРИМЕНЯЕМ ШРИФТ К ЭТОМУ БЛОКУ */
+            font-family: 'MyCustomFont', sans-serif;
+            font-size: 18px;
+            line-height: 1.5;
+            outline: none; /* Убираем рамку при клике */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button onclick="downloadPDF()">Сохранить в PDF</button>
+    </div>
+
+    <!-- Атрибут contenteditable="true" превращает обычный div в текстовый редактор -->
+    <div id="document-container" contenteditable="true">
+        Удалите этот текст и начните печатать свой...
+    </div>
+
+    <script>
+        function downloadPDF() {
+            // Находим блок с текстом
+            const element = document.getElementById('document-container');
+            
+            // Настройки генерации PDF
+            const options = {
+                margin:       0, // Отступы заданы внутри самого div'а
+                filename:     'my-custom-text.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                // scale: 2 или 3 улучшает качество шрифтов в итоговом PDF
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Запускаем процесс генерации
+            html2pdf().set(options).from(element).save();
+        }
+    </script>
+</body>
+</html>
