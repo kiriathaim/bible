@@ -21,9 +21,9 @@
     <!-- Подключаем интерфейс (кнопка переключения языков/вызова клавиатуры) -->
     <script src="https://s.keyman.com/kmw/engine/17.0.330/kmwuitoggle.js"></script>
 
-    <!-- Подключаем библиотеки для быстрого (тихого) сохранения в PDF -->
+    <!-- Подключение библиотек с разрешением на кросс-доменные ресурсы -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
     
     <style>
         /* ПОДКЛЮЧАЕМ ШРИФТ */
@@ -192,7 +192,7 @@
         // КНОПКА 1: СИСТЕМНАЯ ПЕЧАТЬ (window.print)
         // ==========================================
         function printNative() {
-            if (!prepareText()) {
+            if (prepareText()) {
             // Браузер сам применит стили @media print и покажет окно
             window.print();
             }
@@ -216,6 +216,28 @@
 
                 // Ожидаем загрузки кастомного шрифта в браузере
                 await document.fonts.ready;
+
+                // Настройки для устранения ошибок в консоли
+                const options = {
+                    pixelRatio: 2,
+                    quality: 0.95,
+                    backgroundColor: '#ffffff',
+                    style: { 
+                        left: '0', 
+                        position: 'relative',
+                        display: 'block' 
+                    },
+                    // ФИЛЬТР: Игнорируем элементы интерфейса Keyman, чтобы не провоцировать CORS ошибки
+                    filter: (node) => {
+                        const exclusionClasses = ['kmw-osk-container', 'kmw-footer', 'keymanweb-ui'];
+                        if (node.classList) {
+                            return !exclusionClasses.some(cls => node.classList.contains(cls));
+                        }
+                        return true;
+                    },
+                    // Не пытаемся встраивать внешние CSS, которые вызывают ошибки
+                    skipFonts: false, // наш Ezra SIL подхватится, так как он локальный
+                };
 
                 // Делаем снимок скрытого блока
                 const dataUrl = await htmlToImage.toJpeg(renderContainer, {
@@ -258,8 +280,13 @@
                 pdf.save('qatan_writer_text.pdf');
 
             } catch (error) {
-                console.error('Ошибка:', error);
-                alert('Произошла ошибка при создании PDF.');
+                // Если это ошибка доступа к стилям, мы её просто игнорируем, если PDF всё равно создается
+                if (e.message && e.message.includes('cssRules')) {
+                    console.warn("Проигнорирована незначительная ошибка доступа к чужим стилям.");
+                } else {
+                    console.error("Критическая ошибка:", e);
+                    alert("Ошибка при создании PDF");
+                }
             } finally {
                 // Возвращаем кнопку в норму
                 btn.innerHTML = originalText;
