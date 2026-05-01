@@ -63,24 +63,23 @@
             border-radius: 5px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: background-color 0.3s;
-        }
+            transition: background-color 0.3s; }
 
         button:disabled {
             background-color: #6c757d !important;
-            cursor: not-allowed;
-        }
+            cursor: not-allowed; }
 
         /* Синяя кнопка для системной печати */
         .print-btn {
-            background-color: #007bff;
-        }
-        .print-btn:hover { background-color: #0056b3; }
+            background-color: #007bff; }
+
+        .print-btn:hover { 
+            background-color: #0056b3; }
 
         /* Зеленая кнопка для быстрого скачивания */
         .save-btn {
-            background-color: #28a745;
-        }
+            background-color: #28a745; }
+
         .save-btn:hover { background-color: #218838; }
 
         /* ПОЛЕ ДЛЯ ВВОДА ТЕКСТА */
@@ -135,8 +134,7 @@
         @media print {
             /* Прячем кнопки, редактор и клавиатуру Keyman */
             body > *:not(#render-container) {
-                display: none !important;
-            }
+                display: none !important; }
             
             body { background: white; padding: 0; }
 
@@ -146,8 +144,7 @@
                 left: 0 !important;
                 width: auto !important;
                 min-height: auto !important;
-                padding: 0 !important; /* Отступы задаст принтер */
-            }
+                padding: 0 !important; /* Отступы задаст принтер */ }
 
             @page { margin: 20mm; }
         }
@@ -195,9 +192,10 @@
         // КНОПКА 1: СИСТЕМНАЯ ПЕЧАТЬ (window.print)
         // ==========================================
         function printNative() {
-            if (!prepareText()) return;
+            if (!prepareText()) {
             // Браузер сам применит стили @media print и покажет окно
             window.print();
+            }
         }
 
         // ==========================================
@@ -223,12 +221,12 @@
                 const dataUrl = await htmlToImage.toJpeg(renderContainer, {
                     pixelRatio: 2, // Высокое качество текста
                     quality: 0.95,           // Оптимизация JPEG
-                    backgroundColor: '#ffffff' // Гарантированно белый фон
+                    backgroundColor: '#ffffff', // Гарантированно белый фон
+
                     style: {
                         // Временно "возвращаем" блок в кадр для фотокамеры библиотеки
                         left: '0',
-                        position: 'relative'
-                    }
+                        position: 'relative'}
                 });
 
                 // Создаем PDF
