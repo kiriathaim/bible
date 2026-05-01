@@ -20,6 +20,10 @@
     <script src="https://s.keyman.com/kmw/engine/17.0.330/keymanweb.js"></script>
     <!-- Подключаем интерфейс (кнопка переключения языков/вызова клавиатуры) -->
     <script src="https://s.keyman.com/kmw/engine/17.0.330/kmwuitoggle.js"></script>
+
+    <!-- Подключаем библиотеки для быстрого (тихого) сохранения в PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
         /* ПОДКЛЮЧАЕМ ШРИФТ */
@@ -50,20 +54,34 @@
             justify-content: center;
         }
 
-        button.save-btn {
+        /* Общий стиль для кнопок */
+        button {
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
         }
 
-        button.save-btn:hover {
-            background-color: #218838;
+        button:disabled {
+            background-color: #6c757d !important;
+            cursor: not-allowed;
         }
+
+        /* Синяя кнопка для системной печати */
+        .print-btn {
+            background-color: #007bff;
+        }
+        .print-btn:hover { background-color: #0056b3; }
+
+        /* Зеленая кнопка для быстрого скачивания */
+        .save-btn {
+            background-color: #28a745;
+        }
+        .save-btn:hover { background-color: #218838; }
 
         /* ПОЛЕ ДЛЯ ВВОДА ТЕКСТА */
         textarea {
@@ -88,40 +106,49 @@
             resize: vertical;
         }
 
-        /* Скрытый блок. Нужен только для идеального экспорта в PDF */
-        #print-container {
-            display: none;
-            width: 100%;
+        /* 
+           УНИВЕРСАЛЬНЫЙ СКРЫТЫЙ КОНТЕЙНЕР 
+           По умолчанию спрятан за левым краем экрана.
+           Нужен для html-to-image.
+        */
+        #render-container {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            width: 210mm; /* Ширина А4 */
+            min-height: 297mm;
+            padding: 20mm;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            
             font-family: 'Ezra SIL', sans-serif;
-            font-size: 42px;
+            font-size: 38px;
             line-height: 1.6;
             direction: rtl;
             text-align: right;
-            white-space: pre-wrap; /* Учитывает переносы строк (Enter) */
+            white-space: pre-wrap;
             word-wrap: break-word;
         }
 
-        /* Сохранение в PDF) */
+        /* НАСТРОЙКИ ДЛЯ СИСТЕМНОЙ ПЕЧАТИ (window.print) */
         @media print {
-            /* Прячем всё лишнее (кнопки, поле ввода, клавиатуру Keyman) */
-            body > *:not(#print-container) {
+            /* Прячем кнопки, редактор и клавиатуру Keyman */
+            body > *:not(#render-container) {
                 display: none !important;
             }
             
-            body {
-                background: white;
-                padding: 0;
+            body { background: white; padding: 0; }
+
+            /* Возвращаем скрытый контейнер на экран для печати */
+            #render-container {
+                position: static !important;
+                left: 0 !important;
+                width: auto !important;
+                min-height: auto !important;
+                padding: 0 !important; /* Отступы задаст принтер */
             }
 
-            /* Показываем только чистый подготовленный текст */
-            #print-container {
-                display: block !important;
-            }
-
-            /* Задаем стандартные поля для PDF-страницы */
-            @page {
-                margin: 20mm;
-            }
+            @page { margin: 20mm; }
         }
 
     </style>
@@ -129,42 +156,107 @@
 <body>
 
     <div class="controls">
-        <button class="save-btn" onclick="saveToPDF()">Сохранить в PDF</button>
+        <button class="print-btn" onclick="printNative()">🖨️ Печать / Выделяемый PDF</button>
+        <button class="save-btn" onclick="saveSilentPDF()">⬇️ Быстрый PDF (в 1 клик)</button>
         <!-- Кнопка клавиатуры Keyman появится здесь автоматически -->
     </div>
 
     <!-- Поле ввода, к которому автоматически привяжется Keyman -->
-    <textarea id="editor" placeholder="הקלד כאן... (Начните печатать здесь)"></textarea>
+    <textarea id="editor" placeholder="Начните печатать здесь"></textarea>
 
-    <!-- Невидимый контейнер для печати (браузер отрендерит его в PDF) -->
-    <div id="print-container"></div>
+    <!-- Универсальный контейнер для экспорта/печати -->
+    <div id="render-container"></div>
 
     <script>
-    // Инициализация KeymanWeb после полной загрузки страницы
-    window.addEventListener('load', function () {
-        if (typeof keyman !== 'undefined') {
-            // Запускаем движок (он сам найдет textarea)
-            keyman.init({
-                attachType: 'auto'
-            });
-            // Загружаем официальную клавиатуру иврита SIL с огласовками
-            keyman.addKeyboards('sil_hebrew');
-        } else {
-            console.error("KeymanWeb не загрузился. Проверьте подключение к интернету.");
-        }
-    });
+        // 1. Инициализация виртуальной клавиатуры Keyman
+        window.addEventListener('load', function () {
+            if (typeof keyman !== 'undefined') {
+                keyman.init({ attachType: 'auto' });
+                keyman.addKeyboards('sil_hebrew');
+            }
+        });
 
-    // Функция подготовки текста и вызова окна сохранения PDF
-    function saveToPDF() {
-        const editor = document.getElementById('editor');
-        const printContainer = document.getElementById('print-container');
-        
-        // Копируем текст
-        printContainer.innerText = editor.value;
-        
-        // Вызываем окно печати
-        window.print();
-    }
-</script>
+        // Вспомогательная функция: копируем текст перед любым экспортом
+        function prepareText() {
+            const editor = document.getElementById('editor');
+            const renderContainer = document.getElementById('render-container');
+            
+            if (!editor.value.trim()) {
+                alert("Пожалуйста, введите текст.");
+                return false;
+            }
+            
+            renderContainer.innerText = editor.value;
+            return true;
+        }
+
+        // ==========================================
+        // КНОПКА 1: СИСТЕМНАЯ ПЕЧАТЬ (window.print)
+        // ==========================================
+        function printNative() {
+            if (!prepareText()) return;
+            // Браузер сам применит стили @media print и покажет окно
+            window.print();
+        }
+
+        // ==========================================
+        // КНОПКА 2: БЫСТРОЕ СОХРАНЕНИЕ (html-to-image)
+        // ==========================================
+        async function saveSilentPDF() {
+            if (!prepareText()) return;
+
+            const renderContainer = document.getElementById('render-container');
+            const btn = document.querySelector('.save-btn');
+
+            // Индикация процесса
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "⏳ Формируем...";
+            btn.disabled = true;
+
+            try {
+                // Делаем снимок скрытого блока
+                const dataUrl = await htmlToImage.toPng(renderContainer, {
+                    pixelRatio: 2,
+                    backgroundColor: '#ffffff'
+                });
+
+                // Создаем PDF
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = 210;
+                const pageHeight = 297;
+
+                // Считаем пропорции картинки
+                const imgProps = pdf.getImageProperties(dataUrl);
+                const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                // Первая страница
+                pdf.addImage(dataUrl, 'PNG', 0, position, pdfWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                // Дополнительные страницы (если текст длинный)
+                while (heightLeft > 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(dataUrl, 'PNG', 0, position, pdfWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                // Скачиваем без лишних вопросов
+                pdf.save('hebrew-document.pdf');
+
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при создании PDF.');
+            } finally {
+                // Возвращаем кнопку в норму
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+    </script>
 </body>
 </html>
