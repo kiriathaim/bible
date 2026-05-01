@@ -120,6 +120,7 @@
             padding: 20mm;
             box-sizing: border-box;
             background-color: #ffffff;
+            color: #000000; /* Явно задаем черный цвет текста */
             
             font-family: 'Ezra SIL', sans-serif;
             font-size: 38px;
@@ -156,8 +157,8 @@
 <body>
 
     <div class="controls">
-        <button class="print-btn" onclick="printNative()">🖨️ Печать / Выделяемый PDF</button>
-        <button class="save-btn" onclick="saveSilentPDF()">⬇️ Быстрый PDF (в 1 клик)</button>
+        <button class="print-btn" onclick="printNative()">🖨️ Печать PDF</button>
+        <button class="save-btn" onclick="saveSilentPDF()">⬇️ Быстрый PDF</button>
         <!-- Кнопка клавиатуры Keyman появится здесь автоматически -->
     </div>
 
@@ -168,7 +169,7 @@
     <div id="render-container"></div>
 
     <script>
-        // 1. Инициализация виртуальной клавиатуры Keyman
+        // Инициализация виртуальной клавиатуры Keyman
         window.addEventListener('load', function () {
             if (typeof keyman !== 'undefined') {
                 keyman.init({ attachType: 'auto' });
@@ -214,10 +215,20 @@
             btn.disabled = true;
 
             try {
+
+                // Ожидаем загрузки кастомного шрифта в браузере
+                await document.fonts.ready;
+
                 // Делаем снимок скрытого блока
-                const dataUrl = await htmlToImage.toPng(renderContainer, {
-                    pixelRatio: 2,
-                    backgroundColor: '#ffffff'
+                const dataUrl = await htmlToImage.toJpeg(renderContainer, {
+                    pixelRatio: 2, // Высокое качество текста
+                    quality: 0.95,           // Оптимизация JPEG
+                    backgroundColor: '#ffffff' // Гарантированно белый фон
+                    style: {
+                        // Временно "возвращаем" блок в кадр для фотокамеры библиотеки
+                        left: '0',
+                        position: 'relative'
+                    }
                 });
 
                 // Создаем PDF
@@ -234,19 +245,19 @@
                 let position = 0;
 
                 // Первая страница
-                pdf.addImage(dataUrl, 'PNG', 0, position, pdfWidth, imgHeight);
+                pdf.addImage(dataUrl, 'JPEG', 0, position, pdfWidth, imgHeight);
                 heightLeft -= pageHeight;
 
                 // Дополнительные страницы (если текст длинный)
                 while (heightLeft > 0) {
-                    position = heightLeft - imgHeight;
+                    position -= pageHeight; // Сдвигаем картинку вверх
                     pdf.addPage();
-                    pdf.addImage(dataUrl, 'PNG', 0, position, pdfWidth, imgHeight);
+                    pdf.addImage(dataUrl, 'JPEG', 0, position, pdfWidth, imgHeight);
                     heightLeft -= pageHeight;
                 }
 
                 // Скачиваем без лишних вопросов
-                pdf.save('hebrew-document.pdf');
+                pdf.save('qatan_writer_text.pdf');
 
             } catch (error) {
                 console.error('Ошибка:', error);
